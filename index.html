@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>生日快乐</title>
+    <style>
+        /* 重置边距，让页面充满 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 背景：温柔渐变色，从浅米到淡粉（也可换成你喜欢的） */
+            background: linear-gradient(145deg, #fef9e6 0%, #ffe6f0 100%);
+            /* 让内容在视口中居中 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Georgia', '宋体', 'Times New Roman', serif;
+            padding: 20px;
+        }
+
+        /* 白色卡片纸效果 */
+        .card {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 32px;
+            padding: 40px 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        /* 可选：一个小装饰线 */
+        .deco-line {
+            width: 60px;
+            height: 2px;
+            background: #e2c6b0;
+            margin: 20px auto 25px auto;
+            border-radius: 2px;
+        }
+
+        /* 主文字 */
+        .message {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #3d3a34;
+            margin: 25px 0;
+            letter-spacing: 0.3px;
+        }
+
+        .message p {
+            margin-bottom: 18px;
+        }
+
+        /* 小字日期 */
+        .date-stamp {
+            font-size: 11px;
+            color: #b1a28c;
+            margin-top: 35px;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+            border-top: 1px solid #f0e2d4;
+            padding-top: 20px;
+            display: inline-block;
+        }
+
+        /* 让诗词一样的格式更舒朗 */
+        .verse {
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        /* 如果添加照片，控制大小 */
+        .memory-img {
+            max-width: 100%;
+            border-radius: 24px;
+            margin: 15px 0 10px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- 你可以放一张有共同记忆的照片（例如你们的学校、天空） -->
+    <!-- 
+    <img class="memory-img" src="你的照片地址.jpg" alt="曾经的路"> 
+    如果你不放图片，就把这行删掉或注释掉。
+    -->
+
+    <div class="message">
+        <p>生日快乐。</p>
+        <p>想了很久该送你什么。<br>后来觉得，应该送你一个只有我能做的东西。</p>
+        <p>这个页面会在互联网上一直存在，<br>就像有些记忆不会消失。</p>
+        <p>你当医生的路很长，<br>我只祝你平安、有力气、偶尔轻松。</p>
+        <p class="verse">不必回信。</p>
+        <p>—— 曾经的某个人</p>
+    </div>
+    <div class="deco-line"></div>
+    <div class="date-stamp">
+        打开这个页面的时间：<span id="liveTime"></span>
+    </div>
+</div>
+
+<script>
+    // 自动显示她打开时的本地时间
+    function displayTime() {
+        let now = new Date();
+        let formatted = now.getFullYear() + '年' + 
+                       (now.getMonth()+1) + '月' + 
+                       now.getDate() + '日 ' +
+                       now.getHours().toString().padStart(2,'0') + ':' +
+                       now.getMinutes().toString().padStart(2,'0') + ':' +
+                       now.getSeconds().toString().padStart(2,'0');
+        document.getElementById('liveTime').innerText = formatted;
+    }
+    displayTime();
+</script>
+
+<!-- 彩蛋：查看源代码可见 -->
+<!-- 
+  嗨，如果你看到了这里 —— 
+  其实我写了第二封信：去年你生日那天，碎冰蓝花束卖完了。
+  所以我今年学了写一个只有我们知道的网页。
+ -->
+</body>
+</html>
