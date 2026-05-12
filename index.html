@@ -3,131 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="robots" content="noindex">
     <title>生日快乐</title>
     <style>
-        /* 重置边距，让页面充满 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            /* 背景：温柔渐变色，从浅米到淡粉（也可换成你喜欢的） */
-            background: linear-gradient(145deg, #fef9e6 0%, #ffe6f0 100%);
-            /* 让内容在视口中居中 */
+            background: linear-gradient(145deg, #f0f0f5 0%, #e2e2ed 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Georgia', '宋体', 'Times New Roman', serif;
             padding: 20px;
+            position: relative;
         }
-
-        /* 白色卡片纸效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#00000008 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
         .card {
             max-width: 600px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(3px);
             border-radius: 32px;
             padding: 40px 32px;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
             text-align: center;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(0,0,0,0.04);
         }
-
-        /* 可选：一个小装饰线 */
         .deco-line {
             width: 60px;
             height: 2px;
-            background: #e2c6b0;
+            background: #d0d0dc;
             margin: 20px auto 25px auto;
             border-radius: 2px;
         }
-
-        /* 主文字 */
         .message {
             font-size: 18px;
             line-height: 1.7;
-            color: #3d3a34;
+            color: #3a3a4a;
             margin: 25px 0;
             letter-spacing: 0.3px;
         }
-
         .message p {
             margin-bottom: 18px;
         }
-
-        /* 小字日期 */
         .date-stamp {
             font-size: 11px;
-            color: #b1a28c;
+            color: #8a8a9a;
             margin-top: 35px;
             font-family: monospace;
-            letter-spacing: 0.5px;
-            border-top: 1px solid #f0e2d4;
+            border-top: 1px solid #e0e0e8;
             padding-top: 20px;
             display: inline-block;
         }
-
-        /* 让诗词一样的格式更舒朗 */
-        .verse {
-            font-style: normal;
-            font-weight: normal;
+        .interactive-flower {
+            margin: 10px auto 0 auto;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 28px;
+            opacity: 0.6;
+            transition: 0.2s;
         }
-
-        /* 如果添加照片，控制大小 */
-        .memory-img {
-            max-width: 100%;
+        .interactive-flower:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .hidden-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #f5f5fa;
             border-radius: 24px;
-            margin: 15px 0 10px;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+            margin: 0 auto;
+            width: 90%;
+            font-size: 14px;
+            color: #5a5a6e;
+            text-align: center;
+        }
+        .hidden-message.show {
+            max-height: 200px;
+            margin-top: 20px;
+            padding: 12px 16px;
+        }
+        .signature {
+            font-size: 13px;
+            color: #8a8a9a;
+            margin-top: 24px;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-
-<div class="card">
-    <!-- 你可以放一张有共同记忆的照片（例如你们的学校、天空） -->
-    <!-- 
-    <img class="memory-img" src="你的照片地址.jpg" alt="曾经的路"> 
-    如果你不放图片，就把这行删掉或注释掉。
-    -->
-
-    <div class="message">
+<div class="card" id="mainCard">
+    <div class="message" id="messageArea">
         <p>生日快乐。</p>
-        <p>想了很久该送你什么。<br>后来觉得，应该送你一个只有我能做的东西。</p>
-        <p>这个页面会在互联网上一直存在，<br>就像有些记忆不会消失。</p>
-        <p>你当医生的路很长，<br>我只祝你平安、有力气、偶尔轻松。</p>
-        <p class="verse">不必回信。</p>
-        <p>—— 曾经的某个人</p>
+        <p>写下这些的时候，<br>我好像又变回那个会为了一封信<br>想很久的人。</p>
+        <p>你学医的路还很长，<br>如果哪天累了，<br>希望你能想起有人曾这样认真地<br>给你写过一些东西。</p>
+        <p>不用特意回复。<br>愿你往后的日子都顺遂。</p>
     </div>
     <div class="deco-line"></div>
     <div class="date-stamp">
-        打开这个页面的时间：<span id="liveTime"></span>
+        打开时间：<span id="liveTime"></span>
     </div>
+    <div class="interactive-flower" id="flowerIcon">✉️</div>
+    <div id="extraMessage" class="hidden-message">
+        <p>有些话放在这里刚好。<br>谢谢你愿意读到这里。<br>愿你清澈、自由、有力气。</p>
+    </div>
+    <div class="signature">—— 很在意你的人</div>
 </div>
 
 <script>
-    // 自动显示她打开时的本地时间
     function displayTime() {
         let now = new Date();
-        let formatted = now.getFullYear() + '年' + 
-                       (now.getMonth()+1) + '月' + 
-                       now.getDate() + '日 ' +
-                       now.getHours().toString().padStart(2,'0') + ':' +
-                       now.getMinutes().toString().padStart(2,'0') + ':' +
-                       now.getSeconds().toString().padStart(2,'0');
+        let formatted = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日 ' +
+            now.getHours().toString().padStart(2,'0') + ':' +
+            now.getMinutes().toString().padStart(2,'0') + ':' +
+            now.getSeconds().toString().padStart(2,'0');
         document.getElementById('liveTime').innerText = formatted;
     }
     displayTime();
+
+    // 归档日期：2026年5月20日
+    const archiveDate = new Date(2026, 4, 20);
+    const now = new Date();
+
+    if (now > archiveDate) {
+        document.getElementById('messageArea').innerHTML = `
+            <p>这封信已经归档了。</p>
+            <p>有些东西可能不会永远停在原处，<br>但它们确实存在过。</p>
+            <p>谢谢你给过我的那些时光。<br>希望你当医生的路上，<br>总有人能接住你的疲惫。<br>再见年少时的纯真</p>
+            <p>—— 曾经很在意你的人</p>
+        `;
+        const flower = document.getElementById('flowerIcon');
+        if (flower) flower.style.display = 'none';
+    }
+
+    const flower = document.getElementById('flowerIcon');
+    const extraDiv = document.getElementById('extraMessage');
+    if (flower) {
+        flower.addEventListener('click', function() {
+            extraDiv.classList.toggle('show');
+        });
+    }
 </script>
 
-<!-- 彩蛋：查看源代码可见 -->
-<!-- 
-  嗨，如果你看到了这里 —— 
-  其实我写了第二封信：去年你生日那天，碎冰蓝花束卖完了。
-  所以我今年学了写一个只有我们知道的网页。
- -->
+<!--
+    如果你看到这里，说明你还是会在意那些细小的地方。
+    这封信不是为了让你难过，只是有些话，我想好好说完。
+    谢谢你来过我的生活。
+    愿你一切都好。
+-->
 </body>
 </html>
